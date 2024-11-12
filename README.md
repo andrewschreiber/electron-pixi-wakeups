@@ -54,6 +54,7 @@ Interestingly the renderer processes is much less active here despite being 1/60
 
 - Doesn't matter if the window is displayed or not
 - 'low-power' `powerPreference` doesn't seem to make a difference on energy impact or CPU use, but setting `maxFPS` does (despite a static graphic)
+- Using 'webgpu' doesn't make a difference here
 
 
 ## Thanks for reading
