@@ -6,6 +6,8 @@ import icon from '../../resources/icon.png?asset'
 function createWindow(): void {
   const { width, height } = screen.getPrimaryDisplay().size
 
+  app.commandLine.appendSwitch('--disable-frame-rate-limit')
+
   // const windowHeight = 140;
 
   // Create the browser window.
