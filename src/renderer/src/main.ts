@@ -1,5 +1,5 @@
 import { Application, Graphics } from 'pixi.js'
-import { DotFilter } from 'pixi-filters'
+import { DotFilter, EmbossFilter, KawaseBlurFilter, ShockwaveFilter } from 'pixi-filters'
 
 const app = new Application()
 async function initPixi() {
@@ -28,8 +28,19 @@ async function initPixi() {
 
     // Create dot filter
     const dotFilter = new DotFilter({
-      scale: 1, // Size of the dots (1 = default, higher = bigger dots)
+      scale: 5, // Size of the dots (1 = default, higher = bigger dots)
       angle: 1.5 // Angle of the dot pattern in radians
+    })
+    const embossFilter = new EmbossFilter(20)
+
+    const kFilter = new KawaseBlurFilter()
+
+    const shockwaveFilter = new ShockwaveFilter([app.screen.width / 2, app.screen.height / 2], {
+      amplitude: 30, // Height of the wave
+      wavelength: 160, // Width of the wave
+      speed: 500, // Speed the wave travels
+      brightness: 1.5, // Brightness of the wave
+      radius: -1 // -1 means the wave will start from center and go outward
     })
 
     // Apply filter to the entire stage
@@ -49,6 +60,8 @@ async function initPixi() {
 
       // Rotate pattern
       dotFilter.angle = time * 0.003
+
+      // shockFilter.speed = Math.sin(time) * 0.5 + 0.5
     })
 
     // Handle window resize
