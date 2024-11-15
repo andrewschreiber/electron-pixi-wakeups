@@ -7,20 +7,19 @@ function createWindow(): void {
   const { width, height } = screen.getPrimaryDisplay().size
 
   // const windowHeight = 140;
-  const windowHeight = 250
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     x: 0,
-    y: height - windowHeight + 1,
+    y: 0, // Start from top of screen
     width,
-    height: windowHeight,
+    height, // Use full height
     resizable: false,
     closable: false,
     minimizable: false,
     maximizable: false,
     skipTaskbar: true,
-    titleBarStyle: 'customButtonsOnHover',
+    titleBarStyle: 'hidden', // Changed from customButtonsOnHover
     movable: false,
     focusable: true,
     roundedCorners: false,
@@ -35,6 +34,14 @@ function createWindow(): void {
       sandbox: false
     }
   })
+
+  mainWindow.setIgnoreMouseEvents(true, { forward: true })
+  if (process.platform === 'darwin') {
+    // Set the window level to be above the menu bar
+    mainWindow.setWindowButtonVisibility(false)
+    mainWindow.setAlwaysOnTop(true, 'screen-saver') // Use screen-saver level
+    app.dock.hide() // Hide from dock
+  }
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()

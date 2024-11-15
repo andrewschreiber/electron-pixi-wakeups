@@ -1,5 +1,5 @@
 import { Application, Graphics } from 'pixi.js'
-import { DotFilter, EmbossFilter, KawaseBlurFilter, ShockwaveFilter } from 'pixi-filters'
+import { DotFilter } from 'pixi-filters'
 
 const app = new Application()
 async function initPixi() {
@@ -21,26 +21,16 @@ async function initPixi() {
 
   try {
     // Create the red square
-    const graphics = new Graphics().rect(-800, 0, 1600, 120).fill({ color: 0xff00ff, alpha: 0.3 })
-
-    graphics.position.set(app.screen.width / 2, app.screen.height / 2)
+    const graphics = new Graphics()
+      .rect(0, 0, app.screen.width, app.screen.height)
+      .fill({ color: 0xff00ff, alpha: 0.2 })
     app.stage.addChild(graphics)
 
     // Create dot filter
     const dotFilter = new DotFilter({
-      scale: 5, // Size of the dots (1 = default, higher = bigger dots)
-      angle: 1.5 // Angle of the dot pattern in radians
-    })
-    const embossFilter = new EmbossFilter(20)
-
-    const kFilter = new KawaseBlurFilter()
-
-    const shockwaveFilter = new ShockwaveFilter([app.screen.width / 2, app.screen.height / 2], {
-      amplitude: 30, // Height of the wave
-      wavelength: 160, // Width of the wave
-      speed: 500, // Speed the wave travels
-      brightness: 1.5, // Brightness of the wave
-      radius: -1 // -1 means the wave will start from center and go outward
+      scale: 1, // Size of the dots (1 = default, higher = bigger dots)
+      angle: 1.5, // Angle of the dot pattern in radians
+      grayscale: false
     })
 
     // Apply filter to the entire stage
@@ -59,7 +49,7 @@ async function initPixi() {
       // dotFilter.scale = 1 + Math.sin(time) * 0.3
 
       // Rotate pattern
-      dotFilter.angle = time * 0.003
+      dotFilter.angle = 0.21 - ((time * 0.0005) % 0.2)
 
       // shockFilter.speed = Math.sin(time) * 0.5 + 0.5
     })
