@@ -21,18 +21,25 @@ function createWindow(): void {
     skipTaskbar: true,
     titleBarStyle: 'hidden', // Changed from customButtonsOnHover
     movable: false,
-    focusable: true,
+    focusable: false,
     roundedCorners: false,
     fullscreen: false,
     transparent: true,
     opacity: 1,
     hasShadow: false,
+    paintWhenInitiallyHidden: true, // Optimize initial render
+
     // show: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
+      // offscreen: true // Use offscreen rendering
     }
+  })
+
+  mainWindow.hookWindowMessage?.(0x0200, () => {
+    return false
   })
 
   mainWindow.setIgnoreMouseEvents(true, { forward: true })
